@@ -16,6 +16,15 @@ import productRoutes from './src/routes/products.js';
 import categoryRoutes from './src/routes/categories.js';
 import orderRoutes from './src/routes/orders.js';
 import userRoutes from './src/routes/users.js';
+import reelsRoutes from './src/routes/reels.js';
+import settingsRoutes from './src/routes/settings.js';
+import homepageRoutes from './src/routes/homepage.js';
+import contentRoutes from './src/routes/content.js';
+import adminSettingsRoutes from './src/routes/adminSettings.js';
+import formsRoutes from './src/routes/forms.js';
+import seoRoutes from './src/routes/seo.js';
+import rolesRoutes from './src/routes/roles.js';
+import adminUploadRoutes from './src/routes/adminUpload.js';
 import { errorHandler } from './src/middleware/errorHandler.js';
 
 dotenv.config();
@@ -44,9 +53,18 @@ app.use('/api', productRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', orderRoutes);
 app.use('/api', userRoutes);
+app.use('/api', reelsRoutes);
 app.use('/api/admin', configRoutes);
 app.use('/api/admin', mediaRoutes);
 app.use('/api/admin', statsRoutes);
+app.use('/api/admin', settingsRoutes);
+app.use('/api/admin', homepageRoutes);
+app.use('/api/admin', contentRoutes);
+app.use('/api/admin', adminSettingsRoutes);
+app.use('/api/admin', formsRoutes);
+app.use('/api/admin', seoRoutes);
+app.use('/api/admin', rolesRoutes);
+app.use('/api/admin', adminUploadRoutes);
 
 app.use(errorHandler);
 
