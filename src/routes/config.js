@@ -1,7 +1,7 @@
 import express from 'express';
 import Joi from 'joi';
 import Config from '../models/Config.js';
-import { authenticate, isAdmin } from '../middleware/auth.js';
+import { authenticate, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -47,7 +47,7 @@ router.get('/:key', async (req, res, next) => {
   }
 });
 
-router.use(authenticate, isAdmin);
+router.use(authenticate, authorize(['admin', 'super-admin']));
 
 router.post('/', async (req, res, next) => {
   try {
