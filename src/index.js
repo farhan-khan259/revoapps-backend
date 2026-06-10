@@ -30,7 +30,13 @@ dotenv.config();
 const app = express();
 
 app.use(helmet());
-app.use(cors({ origin: true, credentials: true }));
+const frontendOrigin = process.env.FRONTEND_URL || 'https://c.cimprints.com';
+app.use(
+  cors({
+    origin: process.env.NODE_ENV === 'production' ? frontendOrigin : true,
+    credentials: true,
+  })
+);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(morgan('dev'));
