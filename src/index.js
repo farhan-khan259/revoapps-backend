@@ -55,6 +55,21 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use('/uploads', express.static('uploads'));
 
+app.get('/', (req, res) => {
+  res.json({
+    status: 'ok',
+    message: 'Creative Imprints backend is running',
+    api: '/api',
+  });
+});
+
+app.get('/api', (req, res) => {
+  res.json({
+    status: 'ok',
+    message: 'Creative Imprints backend API is available',
+  });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api', userRoutes);
 app.use('/api/products', productsRoutes);
