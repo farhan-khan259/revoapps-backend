@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import rateLimit from 'express-rate-limit';
 import http from 'http';
 import connectDatabase from './db.js';
+import { createDefaultAdmin } from './seed.js';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
 import contentRoutes from './routes/content.js';
@@ -100,7 +101,9 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 4000;
 
 connectDatabase()
-  .then(() => {
+  .then(async () => {
+    await createDefaultAdmin();
+
     const server = http.createServer(app);
 
     server.on('error', (err) => {
