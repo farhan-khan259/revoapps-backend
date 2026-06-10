@@ -7,24 +7,26 @@ import ContentSection from './models/ContentSection.js';
 
 dotenv.config();
 
-const createDefaultAdmin = async () => {
-  const existing = await User.findOne({ email: process.env.ADMIN_EMAIL });
+export const createDefaultAdmin = async () => {
+  const adminEmail = (process.env.ADMIN_EMAIL || 'admin@example.com').toLowerCase();
+  const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@1234';
+  const existing = await User.findOne({ email: adminEmail });
   if (existing) {
     console.log('Admin user already exists');
     return;
   }
 
-  const passwordHash = await bcrypt.hash(process.env.ADMIN_PASSWORD || 'Admin@1234', 12);
+  const passwordHash = await bcrypt.hash(adminPassword, 12);
   await User.create({
     name: 'Super Admin',
-    email: process.env.ADMIN_EMAIL,
+    email: adminEmail,
     role: 'super-admin',
     passwordHash,
   });
-  console.log('Super admin account created');
+  console.log(`Super admin account created: ${adminEmail}`);
 };
 
-const createDefaultSettings = async () => {
+export const createDefaultSettings = async () => {
   const existing = await WebsiteSetting.findOne({ slug: 'website-settings' });
   if (existing) {
     console.log('Website settings already exist');
@@ -101,7 +103,9 @@ const run = async () => {
   process.exit(0);
 };
 
-run().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+if (process.argv[1].endsWith('seed.js')) {
+  run().catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+}
